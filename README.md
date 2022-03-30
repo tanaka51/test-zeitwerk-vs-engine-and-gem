@@ -1,24 +1,15 @@
-# README
+# zeitwerk と gem/rails engine の相性を見るためのテストアプリ
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* gem で使ってる定数名は使えない
+    * config gem が提供する Settings と競合する app/models/settings/foo.rb を用意した
+    * rails の起動もできない
+* rails engine で定義されてるクラスを素朴にオーバーライドしようと思うと怪しい動きをする
+    * rails engine のクラスをオーバーライドしたい時は rails guide に沿ってやる https://guides.rubyonrails.org/engines.html#improving-engine-functionality
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ rm app/models/settings/foo.rb
+$ rails c
+> DeviseController
+> reload!
+> DeviseController # <= watch what happens
+```
